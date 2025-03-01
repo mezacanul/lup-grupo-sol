@@ -1,49 +1,25 @@
 {
   "expo": {
     "name": "Lup",
-    "slug": "Lup",
+    "slug": "lup",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+      "minSdkVersion": 25,
+      "targetSdkVersion": 34,
+      "compileSdkVersion": 34,
+      "package": "com.eduardomzcn.lup"
     },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ]
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
+    "assetBundlePatterns": ["**/*"],
     "extra": {
-      "router": {
-        "origin": false
-      },
       "eas": {
-        "projectId": "12c815f1-0c2a-45a7-adf8-77167ece75e1"
+        "projectId": "4d3749e8-ecf5-4bf9-924b-3bae0343e6bf"
       }
+    },
+    "splash": {
+      "backgroundColor": "#000000",
+      "image": "./assets/splash_logo.png",
+      "resizeMode": "contain"
     }
   }
 }
