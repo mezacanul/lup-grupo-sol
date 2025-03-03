@@ -17,7 +17,7 @@
       }
     },
     "splash": {
-      "backgroundColor": "#000000",
+      "backgroundColor": "#FFFFFF",
       "image": "./assets/splash_logo.png",
       "resizeMode": "contain"
     }

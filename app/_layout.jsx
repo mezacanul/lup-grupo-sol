@@ -40,6 +40,9 @@ export default function RootLayout() {
     }
   };
 
+  // Indices where sol_2.mp4 appears: 2, 6, 10, 14
+  const sol2Indices = [2, 6, 10, 14];
+
   return (
     <View style={styles.container}>
       <Video
@@ -47,7 +50,9 @@ export default function RootLayout() {
         ref={videoRef}
         source={playlist[currentVideoIndex]}
         style={styles.video}
-        resizeMode="contain"
+        resizeMode={
+          sol2Indices.includes(currentVideoIndex) ? "contain" : "cover"
+        }
         shouldPlay={shouldPlay}
         isMuted={false}
         volume={1.0}
