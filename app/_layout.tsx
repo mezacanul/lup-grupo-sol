@@ -10,31 +10,15 @@ export default function RootLayout() {
 
   return (
     <View style={styles.container}>
-      {showVideo ? (
-        <Video
-          source={require("../assets/marzo_2025.mp4")}
-          style={styles.video}
-          resizeMode="cover"
-          isMuted={false} // Enable sound
-          volume={1.0} // Full volume (optional)
-          isLooping
-          shouldPlay
-        />
-      ) : (
-        <>
-          <Text
-            style={[styles.heading, styles.mainHeading, { fontSize: mainFontSize }]}
-          >
-            ☀️ SOL Yucatán
-          </Text>
-          <Text style={[styles.heading, { fontSize: secondaryFontSize }]}>
-            👽🔭🌌
-          </Text>
-          <Pressable style={styles.button} onPress={() => setShowVideo(true)}>
-            <Text style={styles.buttonText}>Play</Text>
-          </Pressable>
-        </>
-      )}
+      <Video
+        source={require("../assets/marzo_2025.mp4")}
+        style={styles.video}
+        resizeMode="cover"
+        isLooping
+        shouldPlay
+        isMuted={false}
+        volume={1.0}
+      />
     </View>
   );
 }
