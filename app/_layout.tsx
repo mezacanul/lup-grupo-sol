@@ -1,23 +1,57 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Dimensions, Pressable } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { Video } from "expo-av";
 
 export default function RootLayout() {
-  const [showVideo, setShowVideo] = useState(false);
-  const { height } = Dimensions.get("window");
-  const mainFontSize = height * 0.04;
-  const secondaryFontSize = height * 0.02;
+  const videoRef = useRef(null);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [shouldPlay, setShouldPlay] = useState(true);
+
+  const playlist = [
+    require("../assets/sol_1.mp4"),
+    require("../assets/opticas_hana.mp4"),
+    require("../assets/sol_2.mp4"),
+    require("../assets/innova_sport.mp4"),
+    require("../assets/sol_1.mp4"),
+    require("../assets/invictus.mp4"),
+    require("../assets/sol_2.mp4"),
+    require("../assets/sephora.mp4"),
+    require("../assets/sol_1.mp4"),
+    require("../assets/gran_chapur.mp4"),
+    require("../assets/sol_2.mp4"),
+    require("../assets/la_no_20_cantina.mp4"),
+    require("../assets/sol_1.mp4"),
+    require("../assets/purificacion_garcia.mp4"),
+    require("../assets/sol_2.mp4"),
+    require("../assets/the_harbor.mp4"),
+  ];
+
+  useEffect(() => {
+    // Reset playback when switching videos
+    setShouldPlay(false);
+    setTimeout(() => {
+      setShouldPlay(true);
+    }, 100);
+  }, [currentVideoIndex]);
+
+  const handlePlaybackStatusUpdate = (status) => {
+    if (status.didJustFinish) {
+      setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % playlist.length);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Video
-        source={require("../assets/marzo_2025.mp4")}
+        key={currentVideoIndex} // Force re-render on video change
+        ref={videoRef}
+        source={playlist[currentVideoIndex]}
         style={styles.video}
-        resizeMode="cover"
-        isLooping
-        shouldPlay
+        resizeMode="contain"
+        shouldPlay={shouldPlay}
         isMuted={false}
         volume={1.0}
+        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
       />
     </View>
   );
@@ -29,25 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "black",
-  },
-  heading: {
-    fontWeight: "300",
-    color: "white",
-  },
-  mainHeading: {
-    marginBottom: 15,
-  },
-  button: {
-    backgroundColor: "#fff",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#000",
   },
   video: {
     width: Dimensions.get("window").width,
