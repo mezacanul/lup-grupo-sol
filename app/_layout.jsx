@@ -24,6 +24,7 @@ export default function RootLayout() {
     require("../assets/purificacion_garcia.mp4"),
     require("../assets/sol_2.mp4"),
     require("../assets/the_harbor.mp4"),
+    require("../assets/dunosusa.mp4"),
   ];
 
   useEffect(() => {
@@ -41,7 +42,7 @@ export default function RootLayout() {
   };
 
   // Indices where sol_2.mp4 appears: 2, 6, 10, 14
-  const sol2Indices = [2, 6, 10, 14];
+  const resizeIndices = [2, 6, 10, 14, 16];
 
   return (
     <View style={styles.container}>
@@ -51,7 +52,7 @@ export default function RootLayout() {
         source={playlist[currentVideoIndex]}
         style={styles.video}
         resizeMode={
-          sol2Indices.includes(currentVideoIndex) ? "contain" : "cover"
+          resizeIndices.includes(currentVideoIndex) ? "contain" : "cover"
         }
         shouldPlay={shouldPlay}
         isMuted={false}
