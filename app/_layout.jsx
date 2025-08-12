@@ -7,30 +7,6 @@ export default function RootLayout() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [shouldPlay, setShouldPlay] = useState(true);
 
-  const playlist = [
-    // require("../assets/sol_1.mp4"),
-    // require("../assets/sol_2.mp4"),
-    require("../assets/sol_1.mp4"),
-    require("../assets/amorino.mp4"),
-    require("../assets/sol_2.mp4"),
-    require("../assets/chapur.mp4"),
-    require("../assets/sol_1.mp4"),
-    require("../assets/jumiles.mp4"),
-    require("../assets/sol_2.mp4"),
-    require("../assets/lagos.mp4"),
-    require("../assets/sol_1.mp4"),
-    require("../assets/pg.mp4"),
-    require("../assets/sol_2.mp4"),
-    require("../assets/polo_norte.mov"),
-    require("../assets/sol_1.mp4"),
-    require("../assets/sephora.mp4"),
-    require("../assets/sol_2.mp4"),
-    require("../assets/steve_maden.mp4"),
-    require("../assets/sol_1.mp4"),
-    require("../assets/chapur_pay.mp4"),
-    require("../assets/the_harbor.mp4"),
-  ];
-
   useEffect(() => {
     // Reset playback when switching videos
     setShouldPlay(false);
@@ -41,22 +17,22 @@ export default function RootLayout() {
 
   const handlePlaybackStatusUpdate = (status) => {
     if (status.didJustFinish) {
-      setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % playlist.length);
+      setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % playlist.agosto.length);
     }
   };
 
   // Indices where sol_2.mp4 appears: 2, 6, 10, 14
-  const resizeIndices = [2, 6, 10, 14, 17];
+  const resizeCover = [2, 6, 10, 14, 17];
 
   return (
     <View style={styles.container}>
       <Video
         key={currentVideoIndex} // Force re-render on video change
         ref={videoRef}
-        source={playlist[currentVideoIndex]}
+        source={playlist.agosto[currentVideoIndex]}
         style={styles.video}
         resizeMode={
-          resizeIndices.includes(currentVideoIndex) ? "contain" : "cover"
+          resizeCover.includes(currentVideoIndex) ? "contain" : "cover"
         }
         shouldPlay={shouldPlay}
         isMuted={false}
@@ -79,3 +55,32 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
 });
+
+const playlist = {
+  agosto: [
+    // require("../assets/videos/sol_1.mp4"),
+    // require("../assets/videos/sol_2.mp4"),
+    require("../assets/videos/sol_1.mp4"),
+    require("../assets/videos/amorino.mp4"),
+    require("../assets/videos/sol_2.mp4"),
+    require("../assets/videos/chapur.mp4"),
+    require("../assets/videos/sol-anunciate-1.mp4"),
+    require("../assets/videos/jumiles.mp4"),
+    require("../assets/videos/sol-anunciate-2.mp4"),
+    require("../assets/videos/lagos.mp4"),
+    require("../assets/videos/sol_1.mp4"),
+    require("../assets/videos/pg.mp4"),
+    require("../assets/videos/sol_2.mp4"),
+    require("../assets/videos/polo_norte.mov"),
+    require("../assets/videos/sol-anunciate-1.mp4"),
+    require("../assets/videos/sephora.mp4"),
+    require("../assets/videos/sol-anunciate-2.mp4"),
+    require("../assets/videos/steve_maden.mp4"),
+    require("../assets/videos/sol_1.mp4"),
+    require("../assets/videos/chapur_pay.mp4"),
+    require("../assets/videos/sol_2.mp4"),
+    require("../assets/videos/the_harbor.mp4"),
+    require("../assets/videos/sol-anunciate-1.mp4"),
+    require("../assets/videos/cyf.mp4"),
+  ]
+}
