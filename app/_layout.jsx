@@ -8,23 +8,27 @@ export default function RootLayout() {
   const [shouldPlay, setShouldPlay] = useState(true);
 
   const playlist = [
+    // require("../assets/sol_1.mp4"),
+    // require("../assets/sol_2.mp4"),
     require("../assets/sol_1.mp4"),
-    require("../assets/opticas_hana.mp4"),
+    require("../assets/amorino.mp4"),
     require("../assets/sol_2.mp4"),
-    require("../assets/innova_sport.mp4"),
+    require("../assets/chapur.mp4"),
     require("../assets/sol_1.mp4"),
-    require("../assets/invictus.mp4"),
+    require("../assets/jumiles.mp4"),
     require("../assets/sol_2.mp4"),
+    require("../assets/lagos.mp4"),
+    require("../assets/sol_1.mp4"),
+    require("../assets/pg.mp4"),
+    require("../assets/sol_2.mp4"),
+    require("../assets/polo_norte.mov"),
+    require("../assets/sol_1.mp4"),
     require("../assets/sephora.mp4"),
-    require("../assets/sol_1.mp4"),
-    require("../assets/gran_chapur.mp4"),
     require("../assets/sol_2.mp4"),
-    require("../assets/la_no_20_cantina.mp4"),
+    require("../assets/steve_maden.mp4"),
     require("../assets/sol_1.mp4"),
-    require("../assets/purificacion_garcia.mp4"),
-    require("../assets/sol_2.mp4"),
+    require("../assets/chapur_pay.mp4"),
     require("../assets/the_harbor.mp4"),
-    require("../assets/dunosusa.mp4"),
   ];
 
   useEffect(() => {
@@ -42,7 +46,7 @@ export default function RootLayout() {
   };
 
   // Indices where sol_2.mp4 appears: 2, 6, 10, 14
-  const resizeIndices = [2, 6, 10, 14, 16];
+  const resizeIndices = [2, 6, 10, 14, 17];
 
   return (
     <View style={styles.container}>
