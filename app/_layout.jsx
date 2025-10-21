@@ -7,6 +7,7 @@ export default function RootLayout() {
     const [currentVideoIndex, setCurrentVideoIndex] =
         useState(0);
     const [shouldPlay, setShouldPlay] = useState(true);
+    const [resizeMode, setResizeMode] = useState("cover");
 
     useEffect(() => {
         // Reset playback when switching videos
@@ -18,10 +19,11 @@ export default function RootLayout() {
 
     const handlePlaybackStatusUpdate = (status) => {
         if (status.didJustFinish) {
-            setCurrentVideoIndex(
-                (prevIndex) =>
-                    (prevIndex + 1) % playlist.agosto.length
-            );
+            const nextVideoIndex =
+                (currentVideoIndex + 1) %
+                playlist.agosto.length;
+            setCurrentVideoIndex(nextVideoIndex);
+            getResizeMode(nextVideoIndex);
         }
     };
 
@@ -32,11 +34,7 @@ export default function RootLayout() {
                 ref={videoRef}
                 source={playlist.agosto[currentVideoIndex]}
                 style={styles.video}
-                resizeMode={
-                    resizeCover.includes(currentVideoIndex)
-                        ? "contain"
-                        : "cover"
-                }
+                resizeMode={resizeMode}
                 shouldPlay={shouldPlay}
                 isMuted={false}
                 volume={1.0}
@@ -61,21 +59,17 @@ const styles = StyleSheet.create({
     },
 });
 
-const resizeCover = [
-    2,
-    // 4,
-    // 6,
-    10,
-    // 12,
-    // 14,
-    18,
-    // 20
-];
+function getResizeMode(videoIndex) {
+    // for (const video of resizeContain) {
+    console.log(playlist.agosto[videoIndex]);
+    //  playlist.agosto[videoIndex];
+    // }
+}
+
+const resizeContain = ["sol_2"];
 
 const playlist = {
     agosto: [
-        // require("../assets/videos/sol_1.mp4"),
-        // require("../assets/videos/sol_2.mp4"),
         require("../assets/videos/sol_1.mp4"),
         require("../assets/videos/amorino.mp4"),
         require("../assets/videos/sol_2.mp4"),
@@ -97,6 +91,5 @@ const playlist = {
         require("../assets/videos/sol_2.mp4"),
         require("../assets/videos/the_harbor.mp4"),
         require("../assets/videos/sol-anunciate-1.mp4"),
-        require("../assets/videos/cyf.mp4"),
     ],
 };
