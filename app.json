@@ -8,7 +8,8 @@
       "minSdkVersion": 25,
       "targetSdkVersion": 34,
       "compileSdkVersion": 34,
-      "package": "com.eduardomzcn.lup"
+      "package": "com.eduardomzcn.lup",
+      "newArchEnabled": false
     },
     "assetBundlePatterns": ["**/*"],
     "extra": {
