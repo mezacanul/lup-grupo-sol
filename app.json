@@ -5,13 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "android": {
-      "minSdkVersion": 25,
-      "targetSdkVersion": 34,
-      "compileSdkVersion": 34,
-      "package": "com.eduardomzcn.lup",
-      "newArchEnabled": false
+      "package": "com.eduardomzcn.lup"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "extra": {
       "eas": {
         "projectId": "4d3749e8-ecf5-4bf9-924b-3bae0343e6bf"
@@ -23,8 +21,10 @@
       "resizeMode": "contain"
     },
     "icon": "./assets/splash_logo.png",
-    "autolinking": {
-      "legacy_shallowReactNativeLinking": true
-    }
+    "plugins": [
+      "expo-font",
+      "expo-router",
+      "expo-web-browser"
+    ]
   }
 }
