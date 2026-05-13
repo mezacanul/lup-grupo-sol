@@ -10,6 +10,7 @@ PREFIX = 'require("../assets/videos/'
 SUFFIX = '"),'
 
 def get_video_files_names(directory):
+    # Scan the directory and get the files names
     try:
         files = []
         for vf in os.listdir(directory):
@@ -21,7 +22,9 @@ def get_video_files_names(directory):
         return []
 
 if __name__ == "__main__":
+    # Get the video files names
     video_files = get_video_files_names(VIDEOS_DIR)
+    # Save the video files names to a file
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     output_txt_file = os.path.join(OUTPUT_DIR, 'video_files.txt')
     with open(output_txt_file, 'w', encoding='utf-8') as f:

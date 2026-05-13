@@ -21,6 +21,9 @@
       "image": "./assets/splash_logo.png",
       "resizeMode": "contain"
     },
-    "icon": "./assets/splash_logo.png"
+    "icon": "./assets/splash_logo.png",
+    "autolinking": {
+      "legacy_shallowReactNativeLinking": true
+    }
   }
 }
