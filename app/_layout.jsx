@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import { VideoView, useVideoPlayer } from "expo-video";
+import Controls from "@/components/Player/Controls";
 
 export default function RootLayout() {
+  const [showControls, setShowControls] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] =
     useState(0);
+
+  const handleToggleControls = () => {
+    setShowControls((prev) => !prev);
+  };
 
   const currentSource =
     playlist.mayo_2026[currentVideoIndex];
 
   const player = useVideoPlayer(currentSource, (player) => {
-    player.loop = false;
-    player.volume = 1.0;
     // player.playbackRate = 2;
     // player.preservesPitch = false;
+    player.loop = false;
+    player.volume = 1.0;
     player.play();
   });
 
@@ -32,7 +43,18 @@ export default function RootLayout() {
       }
     );
 
-    return () => subscription.remove();
+    const subscription2 = player.addListener(
+      "playingChange",
+      (playerState) => {
+        // console.log("playerState", playerState.isPlaying);
+        setIsPlaying(playerState.isPlaying);
+      }
+    );
+
+    return () => {
+      subscription.remove();
+      subscription2.remove();
+    };
   }, [player, currentVideoIndex]);
 
   // Force restart when video index changes
@@ -50,15 +72,41 @@ export default function RootLayout() {
     ? "contain"
     : "cover";
 
+  useEffect(() => {
+    console.log("player.isPlaying", player.isPlaying);
+  }, [player.isPlaying]);
+
+  const [isPlaying, setIsPlaying] = useState(true);
+  const handleToggle = () => {
+    setIsPlaying((prev) => {
+      const newState = !prev;
+      console.log("new state", newState);
+      return newState;
+    });
+    if (isPlaying) {
+      player.pause();
+    } else {
+      player.play();
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <VideoView
-        player={player}
-        style={styles.video}
-        contentFit={contentFit}
-        allowsPictureInPicture
-        allowsFullscreen
-        nativeControls={false}
+      <Pressable onPress={handleToggleControls}>
+        <VideoView
+          player={player}
+          style={styles.video}
+          contentFit={contentFit}
+          allowsPictureInPicture
+          allowsFullscreen
+          nativeControls={false}
+        />
+      </Pressable>
+      <Controls
+        isPlaying={isPlaying}
+        onToggle={handleToggle}
+        showControls={showControls}
+        handleToggleControls={handleToggleControls}
       />
     </View>
   );
@@ -68,6 +116,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
+    position: "relative",
   },
   video: {
     width: Dimensions.get("window").width,
