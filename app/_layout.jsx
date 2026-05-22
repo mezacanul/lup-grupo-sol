@@ -1,52 +1,64 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import { Video } from "expo-av";
+import { VideoView, useVideoPlayer } from "expo-video";
 
 export default function RootLayout() {
-  // const videoRef = useRef(null);
   const [currentVideoIndex, setCurrentVideoIndex] =
     useState(0);
-  const [shouldPlay, setShouldPlay] = useState(true);
-  const [resizeMode, setResizeMode] = useState("cover");
-  const [currentVideoURI, setCurrentVideoURI] =
-    useState(null);
 
+  const currentSource =
+    playlist.mayo_2026[currentVideoIndex];
+
+  const player = useVideoPlayer(currentSource, (player) => {
+    player.loop = false;
+    player.volume = 1.0;
+    // player.playbackRate = 2;
+    // player.preservesPitch = false;
+    player.play();
+  });
+
+  // Handle when video ends → go to next
   useEffect(() => {
-    // Reset playback when switching videos
-    setShouldPlay(false);
-    setTimeout(() => {
-      setShouldPlay(true);
-    }, 100);
-  }, [currentVideoIndex]);
+    const subscription = player.addListener(
+      "playToEnd",
+      () => {
+        setCurrentVideoIndex((prevIndex) => {
+          const newIndex =
+            (prevIndex + 1) % playlist.mayo_2026.length;
+          console.log("new index", newIndex);
 
-  const handlePlaybackStatusUpdate = (status) => {
-    if (status.isPlaying && !status.didJustFinish) {
-      const { uri } = status;
-      if (uri !== currentVideoURI) {
-        // console.log(getResizeMode(uri), uri);
-        setCurrentVideoURI(uri);
-        setResizeMode(getResizeMode(uri));
+          return newIndex === 0 ? 0 : newIndex;
+        });
       }
+    );
+
+    return () => subscription.remove();
+  }, [player, currentVideoIndex]);
+
+  // Force restart when video index changes
+  useEffect(() => {
+    if (player) {
+      player.replaceAsync(currentSource); // Important: replace source
+      player.play();
     }
-    if (status.didJustFinish) {
-      const nextVideoIndex =
-        (currentVideoIndex + 1) % playlist.mayo_2026.length;
-      setCurrentVideoIndex(nextVideoIndex);
-    }
-  };
+  }, [currentVideoIndex, player]);
+
+  // Calculate resize mode
+  const contentFit = resizeContain.some((item) =>
+    String(currentSource).includes(item)
+  )
+    ? "contain"
+    : "cover";
 
   return (
     <View style={styles.container}>
-      <Video
-        key={currentVideoIndex} // Force re-render on video change
-        // ref={videoRef}
-        source={playlist.mayo_2026[currentVideoIndex]}
+      <VideoView
+        player={player}
         style={styles.video}
-        resizeMode={resizeMode}
-        shouldPlay={shouldPlay}
-        isMuted={false}
-        volume={1.0}
-        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+        contentFit={contentFit}
+        allowsPictureInPicture
+        allowsFullscreen
+        nativeControls={false}
       />
     </View>
   );
@@ -55,8 +67,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "black",
   },
   video: {
@@ -64,16 +74,6 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height,
   },
 });
-
-function getResizeMode(uri) {
-  let resize = "cover";
-  resizeContain.forEach((item) => {
-    if (uri.includes(item)) {
-      resize = "contain";
-    }
-  });
-  return resize;
-}
 
 const resizeContain = ["sol_2"];
 
@@ -109,27 +109,4 @@ const playlist = {
     require("../assets/videos/invictus_2.mp4"),
     require("../assets/videos/sol_2.mp4"),
   ],
-  // agosto: [
-  //     require("../assets/videos/sol_1.mp4"),
-  //     require("../assets/videos/amorino.mp4"),
-  //     require("../assets/videos/sol_2.mp4"),
-  //     require("../assets/videos/chapur.mp4"),
-  //     require("../assets/videos/sol-anunciate-1.mp4"),
-  //     require("../assets/videos/jumiles.mp4"),
-  //     require("../assets/videos/sol-anunciate-2.mp4"),
-  //     require("../assets/videos/lagos.mp4"),
-  //     require("../assets/videos/sol_1.mp4"),
-  //     require("../assets/videos/pg.mp4"),
-  //     require("../assets/videos/sol_2.mp4"),
-  //     require("../assets/videos/polo_norte.mov"),
-  //     require("../assets/videos/sol-anunciate-1.mp4"),
-  //     require("../assets/videos/sephora.mp4"),
-  //     require("../assets/videos/sol-anunciate-2.mp4"),
-  //     require("../assets/videos/steve_maden.mp4"),
-  //     require("../assets/videos/sol_1.mp4"),
-  //     require("../assets/videos/chapur_pay.mp4"),
-  //     require("../assets/videos/sol_2.mp4"),
-  //     require("../assets/videos/the_harbor.mp4"),
-  //     require("../assets/videos/sol-anunciate-1.mp4"),
-  // ],
 };
