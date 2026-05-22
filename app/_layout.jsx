@@ -84,6 +84,8 @@ const playlist = {
     require("../assets/videos/sol_2.mp4"),
     require("../assets/videos/chapur_2.mp4"),
     require("../assets/videos/sol-anunciate-1.mp4"),
+    require("../assets/videos/carla_osorio.mp4"),
+    require("../assets/videos/sol_2.mp4"),
     require("../assets/videos/video_taiyaki.mp4"),
     require("../assets/videos/sol-anunciate-2.mp4"),
     require("../assets/videos/pg.mp4"),
